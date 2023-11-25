@@ -21,7 +21,7 @@ RSpec.describe "Create Subscription", type: :request do
       expect(subscription.price).to eq(params[:price])
       expect(subscription.frequency).to eq(params[:frequency])
       expect(subscription.title).to eq(tea.title)
-      expect(subscription.status).to eq(1)
+      expect(subscription.status).to eq("active")
     end
   end
 end
