@@ -23,4 +23,15 @@ class Api::V1::SubscriptionsController < ApplicationController
       render json: {errors: sub.errors.full_messages.to_sentence}, status: 400
     end
   end
+
+  def update
+    subscription = Subscription.find_by(id: params[:subscription_id])
+
+    if subscription
+      subscription.update(status: 0)
+      render json: {success: "Subscription has been successfully cancelled"}, status: 200
+    else
+      render json: {errors: "Subscription could not be found"}, status: 404
+    end
+  end
 end
