@@ -1,4 +1,9 @@
 class Api::V1::SubscriptionsController < ApplicationController
+  def index
+    subscriptions = Subscription.where(customer_id: params[:customer_id])
+    render json: SubscriptionSerializer.new(subscriptions)
+  end
+
   def create
     details = JSON.parse(request.body.read, symbolize_names: true)
     tea = Tea.find_by(id: details[:tea_id])
