@@ -42,22 +42,20 @@ RSpec.describe "Get Subscriptions", type: :request do
         expect(attributes[:frequency]).to be_an Integer
       end
     end
-
+  end
+  
+  describe "sad paths" do
     it "returns an empty data object if the customer has no subscriptions" do
       customer_3 = Customer.create!(first_name: "Coco", last_name: "Bird", email: "coconut@gmail.com", address: "1234 Bird Ln")
-
+  
       get "/api/v1/subscriptions?customer_id=#{customer_3.id}"
       expect(response).to be_successful
-
+  
       subscriptions = JSON.parse(response.body, symbolize_names: true)
       expect(subscriptions).to be_a Hash
       expect(subscriptions).to have_key(:data)
       expect(subscriptions[:data]).to be_an Array
       expect(subscriptions[:data]).to be_empty
     end
-  end
-
-  describe "sad paths" do
-
   end
 end
