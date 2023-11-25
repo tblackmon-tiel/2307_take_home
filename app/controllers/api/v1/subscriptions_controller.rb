@@ -2,8 +2,15 @@ class Api::V1::SubscriptionsController < ApplicationController
   def create
     details = JSON.parse(request.body.read, symbolize_names: true)
     tea = Tea.find_by(id: details[:tea_id])
+    customer = Customer.find_by(id: details[:customer_id])
+
+    if !tea || !customer
+      render json: {errors: "Tea or customer could not be found"}, status: 404
+      return
+    end
+
     sub = Subscription.new(
-      customer_id: details[:customer_id],
+      customer_id: customer.id,
       tea_id: tea.id,
       title: tea.title,
       price: details[:price],
