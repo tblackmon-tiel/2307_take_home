@@ -29,4 +29,16 @@ RSpec.describe "Delete/Cancel Subscription", type: :request do
       expect(subscription.frequency).to eq(7)
     end
   end
+
+  describe "sad paths" do
+    it "returns an appropriate error if the subscription doesnt exist" do
+      delete "/api/v1/subscriptions/101278390"
+      expect(response).to_not be_successful
+
+      error = JSON.parse(response.body, symbolize_names: true)
+      expect(error).to be_a Hash
+      expect(error).to have_key(:errors)
+      expect(error[:errors]).to eq("Subscription could not be found")
+    end
+  end
 end

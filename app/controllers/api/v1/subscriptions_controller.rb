@@ -27,7 +27,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   def destroy
     subscription = Subscription.find_by(id: params[:id])
 
-    subscription.update(status: 0)
-    render json: {success: "Subscription has been successfully cancelled"}, status: 200
+    if subscription
+      subscription.update(status: 0)
+      render json: {success: "Subscription has been successfully cancelled"}, status: 200
+    else
+      render json: {errors: "Subscription could not be found"}, status: 404
+    end
   end
 end
