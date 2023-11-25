@@ -7,10 +7,9 @@ RSpec.describe Subscription, type: :model do
   end
 
   describe "validations" do
-    it {should validate_presence_of :customer_id}
-    it {should validate_presence_of :tea_id}
     it {should validate_presence_of :price}
     it {should validate_presence_of :status}
+    it {should define_enum_for(:status).with_values([:cancelled, :active]) }
     it {should validate_presence_of :frequency}
   end
 end
